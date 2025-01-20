@@ -6,11 +6,16 @@ import java.util.TreeMap;
 
 public class CustomerService {
 
-    private final NavigableMap<Customer, String> map = new TreeMap<>();
+    private final NavigableMap<Customer, String> map;
+
+    public CustomerService() {
+        // не стал делать передачу компаратора в конструктор, чтобы не менять тесты
+        map = new TreeMap<>(new CustomerScoreComparator());
+    }
 
     public Map.Entry<Customer, String> getSmallest() {
-        return Map.entry(
-                new Customer(map.firstEntry().getKey()), map.firstEntry().getValue());
+        var firstEntry = map.firstEntry();
+        return firstEntry != null ? Map.entry(new Customer(firstEntry.getKey()), firstEntry.getValue()) : null;
     }
 
     public Map.Entry<Customer, String> getNext(Customer customer) {
