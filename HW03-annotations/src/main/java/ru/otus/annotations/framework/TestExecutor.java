@@ -1,4 +1,4 @@
-package ru.otus.annotations;
+package ru.otus.annotations.framework;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.otus.annotations.TestResult;
 import ru.otus.annotations.framework.annotations.After;
 import ru.otus.annotations.framework.annotations.Before;
 import ru.otus.annotations.framework.annotations.Test;
@@ -18,7 +19,7 @@ public class TestExecutor {
     private TestExecutor() {
     }
 
-    public static void runTests(Class<?> clazz) {
+    public static TestResult runTests(Class<?> clazz) {
 
         var testMethods = getAnnotationPresentMethods(clazz, Test.class);
         var beforeMethods = getAnnotationPresentMethods(clazz,Before.class);
@@ -54,7 +55,7 @@ public class TestExecutor {
             }
         }
 
-        printStatistics(allTests, errors);
+        return new TestResult(allTests, errors);
 
     }
 
@@ -74,7 +75,7 @@ public class TestExecutor {
         return testMethods;
     }
 
-    private static void printStatistics(int allTests, int errors) {
-        logger.info("Tests run: {}, Errors: {}", allTests, errors);
+    public static void printStatistics(TestResult testResult) {
+        logger.info("Tests run: {}, Errors: {}", testResult.allTests(), testResult.errors());
     }
 }

@@ -1,8 +1,11 @@
 package ru.otus.annotations;
 
+import ru.otus.annotations.framework.TestExecutor;
+
 public class DemoStart {
 
     public static void main(String[] args) {
-        TestExecutor.runTests(ClassForTesting.class);
+        TestResult result = TestExecutor.runTests(ClassForTesting.class);
+        TestExecutor.printStatistics(result);
     }
 }
