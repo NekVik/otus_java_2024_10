@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.outs.aop.annotation.Log;
@@ -22,27 +24,35 @@ public class Ioc {
                                                              new Class[] {TestLoggingInterface.class}, handler);
     }
 
-    private record IocHandler(TestLoggingInterface myClass) implements InvocationHandler {
+    private static class IocHandler implements InvocationHandler {
+
+        private final TestLoggingInterface myClass;
+        private final Set<MethodSignature> methodSignatures;
+
+        private IocHandler(TestLoggingInterface myClass) {
+            this.myClass = myClass;
+            this.methodSignatures = getAnnotatedMethodSignatures(myClass);
+        }
 
         @Override
-            public Object invoke(Object proxy, Method invokeMethod, Object[] args) throws Throwable {
+        public Object invoke(Object proxy, Method invokeMethod, Object[] args) throws Throwable {
 
-                Method[] methods = myClass.getClass().getDeclaredMethods();
-                var invokeSignature= new MethodSignature(invokeMethod);
-
-                for (Method method : methods) {
-                    Log annotation = method.getAnnotation(Log.class);
-
-                    var signature = new MethodSignature(method);
-                    boolean isEqualMethod = invokeSignature.equals(signature);
-                    if ((annotation != null) && isEqualMethod) {
-                        logger.info("executed method: {}, params: {}", method.getName(), Arrays.toString(args));
-                    }
-                }
-
-                return invokeMethod.invoke(myClass, args);
+            var invokeSignature = new MethodSignature(invokeMethod);
+            if (methodSignatures.contains(invokeSignature)) {
+                logger.info("executed method: {}, params: {}", invokeMethod.getName(), Arrays.toString(args));
             }
+
+            return invokeMethod.invoke(myClass, args);
         }
+
+        private Set<MethodSignature> getAnnotatedMethodSignatures(TestLoggingInterface myClass) {
+
+            return Arrays.stream(myClass.getClass().getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(Log.class))
+                .map(MethodSignature::new)
+                .collect(Collectors.toSet());
+        }
+    }
 
     private static class MethodSignature {
 
