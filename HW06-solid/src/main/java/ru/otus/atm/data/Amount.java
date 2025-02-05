@@ -1,6 +1,5 @@
 package ru.otus.atm.data;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class Amount {
@@ -13,6 +12,11 @@ public class Amount {
         this.balance = value;
     }
 
+    public Amount(UUID id, int value) {
+        this.id = id;
+        this.balance = value;
+    }
+
     public int getBalance() {
         return balance;
     }
@@ -21,20 +25,8 @@ public class Amount {
         this.balance = balance;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Amount amount = (Amount) o;
-        return Objects.equals(id, amount.id);
+    public UUID getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

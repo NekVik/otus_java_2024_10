@@ -2,7 +2,7 @@ package ru.otus.atm.service.impl;
 
 import java.util.List;
 import ru.otus.atm.data.ATM;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 import ru.otus.atm.data.Nominal;
 
 public class ATMOperationService {
@@ -13,11 +13,11 @@ public class ATMOperationService {
         this.atm = atm;
     }
 
-    public void addBanknotes (List<Banknote> banknotes){
-        banknotes.forEach(banknote -> atm.addBanknote(banknote.getNominal(), banknote.getCount()));
+    public void addBanknotes (List<BanknoteCell> banknoteCells){
+        banknoteCells.forEach(banknote -> atm.addBanknote(banknote.getNominal(), banknote.getCount()));
     }
 
-    public List<Banknote> getBanknotes(int sum) {
+    public List<BanknoteCell> getBanknotes(int sum) {
         return atm.getBanknotes(sum);
     }
 

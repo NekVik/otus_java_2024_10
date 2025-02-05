@@ -1,12 +1,12 @@
 package ru.otus.atm.service;
 
 import java.util.List;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 
 public interface OperationService {
 
-    void addSum(List<Banknote> banknotes);
+    void addSum(List<BanknoteCell> banknoteCells);
 
-    List<Banknote> withDraw(int sum);
+    List<BanknoteCell> withDraw(int sum);
 
 }

@@ -2,7 +2,7 @@ package ru.otus.atm.service.impl;
 
 import java.util.Collections;
 import java.util.List;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 import ru.otus.atm.service.OperationService;
 
 public class OperationServiceImpl implements OperationService {
@@ -16,13 +16,13 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public void addSum(List<Banknote> banknotes) {
-        amountOperationService.addSum(banknotes);
-        atmOperationService.addBanknotes(banknotes);
+    public void addSum(List<BanknoteCell> banknoteCells) {
+        amountOperationService.addSum(banknoteCells);
+        atmOperationService.addBanknotes(banknoteCells);
     }
 
     @Override
-    public List<Banknote> withDraw(int sum) {
+    public List<BanknoteCell> withDraw(int sum) {
 
         if (!atmOperationService.canWithDraw(sum)) {
             return Collections.emptyList();

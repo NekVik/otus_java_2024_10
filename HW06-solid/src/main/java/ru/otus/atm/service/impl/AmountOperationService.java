@@ -2,7 +2,7 @@ package ru.otus.atm.service.impl;
 
 import java.util.List;
 import ru.otus.atm.data.Amount;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 import ru.otus.atm.exceptions.AmountNotEnoughException;
 import ru.otus.atm.utils.BanknoteUtils;
 
@@ -14,8 +14,8 @@ public class AmountOperationService {
         this.amount = amount;
     }
 
-    public void addSum(List<Banknote> banknotes) {
-        var sum = BanknoteUtils.getBanknoteSum(banknotes);
+    public void addSum(List<BanknoteCell> banknoteCells) {
+        var sum = BanknoteUtils.getBanknoteSum(banknoteCells);
         amount.setBalance(amount.getBalance() + sum);
     }
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.atm.ATMHelper;
 import ru.otus.atm.data.Amount;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 import ru.otus.atm.data.Nominal;
 import ru.otus.atm.exceptions.ATMIllegalArgumentException;
 import ru.otus.atm.exceptions.ATMNotEnoughException;
@@ -33,8 +33,8 @@ class OperationServiceImplTest {
     @Test
     void addSum() {
         var banknotes = List.of(
-            new Banknote(Nominal.NOMINAL_500, 1),
-            new Banknote(Nominal.NOMINAL_100, 4)
+            new BanknoteCell(Nominal.NOMINAL_500, 1),
+            new BanknoteCell(Nominal.NOMINAL_100, 4)
         );
         serviceForTest.addSum(banknotes);
 

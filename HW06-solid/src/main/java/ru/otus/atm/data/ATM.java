@@ -11,10 +11,10 @@ import ru.otus.atm.utils.BanknoteUtils;
 
 public class ATM {
 
-    private final Map<Nominal, Banknote> slots;
+    private final Map<Nominal, BanknoteCell> slots;
     private int balance;
 
-    public ATM(List<Banknote> slots) {
+    public ATM(List<BanknoteCell> slots) {
 
         this.balance = BanknoteUtils.getBanknoteSum(slots);
 
@@ -31,7 +31,7 @@ public class ATM {
 
             slots.put(nominal, banknote);
         } else {
-            slots.put(nominal, new Banknote(nominal, count));
+            slots.put(nominal, new BanknoteCell(nominal, count));
         }
         balance += nominal.getMultiplier() * count;
     }
@@ -49,9 +49,9 @@ public class ATM {
         return true;
     }
 
-    public List<Banknote> getBanknotes(int sum) {
+    public List<BanknoteCell> getBanknotes(int sum) {
 
-        var result = new ArrayList<Banknote>();
+        var result = new ArrayList<BanknoteCell>();
         var resultSum = sum;
 
         for (var banknote : slots.values()) {
@@ -59,7 +59,7 @@ public class ATM {
             var countBanknote = banknote.getCountInSum(resultSum);
 
             if (countBanknote > 0) {
-                result.add(new Banknote(banknote.getNominal(), countBanknote));
+                result.add(new BanknoteCell(banknote.getNominal(), countBanknote));
                 resultSum -= banknote.getNominal().getMultiplier() * countBanknote;
             }
 

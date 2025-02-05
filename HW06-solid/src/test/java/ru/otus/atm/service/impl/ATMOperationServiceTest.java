@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.otus.atm.ATMHelper;
-import ru.otus.atm.data.Banknote;
+import ru.otus.atm.data.BanknoteCell;
 import ru.otus.atm.data.Nominal;
 import ru.otus.atm.exceptions.ATMIllegalArgumentException;
 import ru.otus.atm.exceptions.ATMNotEnoughException;
@@ -26,8 +26,8 @@ class ATMOperationServiceTest {
     @Test
     void addBanknotes() {
         service.addBanknotes(List.of(
-            new Banknote(Nominal.NOMINAL_5000, 1),
-            new Banknote(Nominal.NOMINAL_100, 2)
+            new BanknoteCell(Nominal.NOMINAL_5000, 1),
+            new BanknoteCell(Nominal.NOMINAL_100, 2)
         ));
         var countBy5000 = service.getCountByNominal(Nominal.NOMINAL_5000);
         assertEquals(1, countBy5000);
