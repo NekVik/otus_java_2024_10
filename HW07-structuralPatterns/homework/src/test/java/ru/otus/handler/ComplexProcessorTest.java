@@ -10,6 +10,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,7 @@ import ru.otus.model.Message;
 import ru.otus.processor.Processor;
 import ru.otus.processor.homework.EvenSecondException;
 import ru.otus.processor.homework.EvenSecondProcessor;
-import ru.otus.processor.homework.EvenSecondProvider;
+import ru.otus.processor.homework.LocalDateTimeProvider;
 
 class ComplexProcessorTest {
 
@@ -100,16 +101,19 @@ class ComplexProcessorTest {
     void evenSecondTest() {
         // given
         var message = new Message.Builder(1L).field9("field9").build();
-        var processorTrue = new EvenSecondProcessor(new EvenSecondProvider() {
+        var processorTrue = new EvenSecondProcessor(new LocalDateTimeProvider() {
             @Override
-            public boolean isEvenSecond() {
-                return true;
+            public LocalDateTime now() {
+                var now = LocalDateTime.now();
+                return now.getSecond() % 2 == 0 ? now: now.plusSeconds(1);
             }
         });
-        var processorFalse = new EvenSecondProcessor(new EvenSecondProvider() {
+
+        var processorFalse = new EvenSecondProcessor(new LocalDateTimeProvider() {
             @Override
-            public boolean isEvenSecond() {
-                return false;
+            public LocalDateTime now() {
+                var now = LocalDateTime.now();
+                return now.getSecond() % 2 != 0 ? now: now.plusSeconds(1);
             }
         });
         assertThrows(EvenSecondException.class, () -> processorTrue.process(message));

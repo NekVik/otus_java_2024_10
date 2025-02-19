@@ -5,15 +5,15 @@ import ru.otus.processor.Processor;
 
 public class EvenSecondProcessor implements Processor {
 
-    private final EvenSecondProvider secondProvider;
+    private final LocalDateTimeProvider secondProvider;
 
-    public EvenSecondProcessor(EvenSecondProvider secondProvider) {
+    public EvenSecondProcessor(LocalDateTimeProvider secondProvider) {
         this.secondProvider = secondProvider;
     }
 
     @Override
     public Message process(Message message) {
-        if (secondProvider.isEvenSecond()) {
+        if (secondProvider.now().getSecond() % 2 == 0) {
             throw new EvenSecondException();
         }
         return message;
