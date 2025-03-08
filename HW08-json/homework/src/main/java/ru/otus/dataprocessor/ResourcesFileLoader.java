@@ -19,10 +19,7 @@ public class ResourcesFileLoader implements Loader {
     public List<Measurement> load() {
         try (var is = getClass().getClassLoader().getResourceAsStream(fileName)) {
 
-            var strJson = new String(is.readAllBytes());
-
-            return mapper.readValue(strJson,
-                mapper.getTypeFactory().constructCollectionType(List.class, Measurement.class));
+            return mapper.readValue(is, mapper.getTypeFactory().constructCollectionType(List.class, Measurement.class));
 
         } catch (Exception e) {
             throw new FileProcessException(e);
