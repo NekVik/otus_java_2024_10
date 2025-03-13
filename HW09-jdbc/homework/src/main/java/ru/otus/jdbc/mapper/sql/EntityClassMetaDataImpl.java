@@ -11,7 +11,7 @@ import ru.otus.jdbc.mapper.annotation.Id;
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     private final String entityClassName;
-    private Constructor<?> constructor;
+    private Constructor<T> constructor;
     private List<Field> nonIdFields;
     private Field idAnnotatedField;
 
@@ -27,7 +27,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     }
 
     @Override
-    public Constructor getConstructor() {
+    public Constructor<T> getConstructor() {
         return constructor;
     }
 
@@ -39,7 +39,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     @Override
     public List<Field> getAllFields() {
         var allFields = new ArrayList<>(nonIdFields);
-        allFields.add(idAnnotatedField); // id field must be the last field
+        allFields.add(idAnnotatedField);
         return allFields;
     }
 
@@ -49,7 +49,7 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     }
 
     private void findEntityConstructor(Class<T> entityClass) {
-        Constructor<?>[] constructors = entityClass.getDeclaredConstructors();
+        Constructor<T>[] constructors = (Constructor<T>[]) entityClass.getDeclaredConstructors();
         this.constructor = Arrays.stream(constructors).filter(c -> c.getParameterCount() == nonIdFields.size() + 1)
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Entity constructor not found"));

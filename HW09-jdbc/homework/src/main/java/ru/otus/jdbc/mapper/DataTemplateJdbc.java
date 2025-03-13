@@ -67,7 +67,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
     @Override
     public void update(Connection connection, T object) {
         dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(),
-            getFieldValues(object, entityClassMetaData.getAllFields()));
+            getFieldValues(object, entityClassMetaData.getFieldsWithoutId(), entityClassMetaData.getIdField()));
     }
 
     private T mapToObject(ResultSet rs) {
@@ -105,6 +105,29 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                 throw new RuntimeException(e.getMessage());
             }
         });
+
+        return fieldValues;
+
+    }
+
+    private List<Object> getFieldValues(T object, List<Field> fields, Field idField) {
+        List<Object> fieldValues = new ArrayList<>();
+
+        fields.forEach(field -> {
+            try {
+                field.setAccessible(true);
+                fieldValues.add(field.get(object));
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        });
+        // Добавляем ID в список значений для запроса UPDATE
+        try {
+            idField.setAccessible(true);
+            fieldValues.add(idField.get(object));
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
 
         return fieldValues;
 
