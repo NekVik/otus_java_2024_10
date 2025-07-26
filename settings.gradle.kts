@@ -9,6 +9,7 @@ include("HW07-structuralPatterns:homework")
 include("HW08-json:homework")
 include("HW09-jdbc:demo")
 include("HW09-jdbc:homework")
+include("HW10-jpql:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -31,3 +32,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+include("HW10-jpql")
