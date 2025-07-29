@@ -54,8 +54,8 @@ public class Client implements Cloneable {
        this.id = id;
        this.name = name;
 
-       this.address = address;
-       this.phones = phones;
+       this.address = getAddressCopy(address);
+       this.phones = getPhonesCopy(phones);
        setClientForPhones();
 
     }
@@ -69,8 +69,8 @@ public class Client implements Cloneable {
     @Override
     public Client clone() {
 
-        var addressCopy = this.address != null ? this.address.clone() : null;
-        var phonesCopy = this.phones != null ? this.phones.stream().map(Phone::clone).toList() : null;
+        var addressCopy = getAddressCopy(this.address);
+        var phonesCopy = getPhonesCopy(this.phones);
 
         return new Client(this.id, this.name, addressCopy, phonesCopy);
     }
@@ -79,4 +79,13 @@ public class Client implements Cloneable {
     public String toString() {
         return "Client{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
+
+    private List<Phone> getPhonesCopy(List<Phone> phones) {
+        return phones != null ? phones.stream().map(Phone::clone).toList() : null;
+    }
+
+    private Address getAddressCopy(Address address) {
+        return address != null ? address.clone() : null;
+    }
+
 }
