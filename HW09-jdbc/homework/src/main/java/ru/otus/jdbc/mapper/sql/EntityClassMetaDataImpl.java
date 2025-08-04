@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
-import ru.otus.jdbc.mapper.annotation.Id;
+import ru.otus.core.annotation.Id;
 
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
