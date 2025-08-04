@@ -10,6 +10,7 @@ include("HW08-json:homework")
 include("HW09-jdbc:demo")
 include("HW09-jdbc:homework")
 include("HW10-jpql:homework")
+include("HW11-cache:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -33,3 +34,6 @@ pluginManagement {
     }
 }
 include("HW10-jpql")
+include("HW11-cache")
+include("HW11-cache:homework")
+findProject(":HW11-cache:homework")?.name = "homework"
