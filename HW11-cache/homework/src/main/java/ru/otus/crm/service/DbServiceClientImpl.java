@@ -19,10 +19,11 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     private final MyCache<String, Client> cache;
 
-    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate) {
+    public DbServiceClientImpl(TransactionManager transactionManager,
+                               DataTemplate<Client> clientDataTemplate, MyCache<String, Client> cache) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
-        this.cache = new MyCache<>();
+        this.cache = cache;
 
         this.cache.addListener(new HwListener<String, Client>() {
             @Override
@@ -40,9 +41,15 @@ public class DbServiceClientImpl implements DBServiceClient {
             if (client.getId() == null) {
                 var savedClient = clientDataTemplate.insert(session, clientCloned);
                 log.info("created client: {}", clientCloned);
+
+                cache.put(String.valueOf(savedClient.getId()), savedClient);
+
                 return savedClient;
             }
             var savedClient = clientDataTemplate.update(session, clientCloned);
+
+            cache.put(String.valueOf(savedClient.getId()), savedClient);
+
             log.info("updated client: {}", savedClient);
             return savedClient;
         });
@@ -74,6 +81,7 @@ public class DbServiceClientImpl implements DBServiceClient {
             var clientList = clientDataTemplate.findAll(session);
             clientList.forEach(client -> {
                     Hibernate.initialize(client.getPhones());
+                    cache.put(String.valueOf(client.getId()), client);
                 });
             log.info("clientList:{}", clientList);
             return clientList;

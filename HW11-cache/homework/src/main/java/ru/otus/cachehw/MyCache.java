@@ -1,5 +1,7 @@
 package ru.otus.cachehw;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.WeakHashMap;
 
 public class MyCache<K, V> implements HwCache<K, V> {
@@ -9,7 +11,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
     private static final String ACTION_GET = "GET";
 
     private final WeakHashMap<K, V> cache = new WeakHashMap<>();
-    private HwListener<K, V> listenerInstance;
+    private List<HwListener<K, V>> listeners = new ArrayList<>();
 
     @Override
     public void put(K key, V value) {
@@ -37,19 +39,23 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void addListener(HwListener<K, V> listener) {
-        listenerInstance = listener;
+        listeners.add(listener);
     }
 
     @Override
     public void removeListener(HwListener<K, V> listener) {
-        listenerInstance = null;
+        listeners.remove(listener);
     }
 
     private void sendNotify(K key, V value, String action) {
 
-        if (listenerInstance != null) {
-            listenerInstance.notify(key, value, action);
-        }
+        listeners.forEach(listener -> {
+            try {
+                listener.notify(key, value, action);
+            } catch (Exception ignore) {
+                // do nothing
+            }
+        });
 
     }
 
