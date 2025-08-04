@@ -33,7 +33,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-include("HW10-jpql")
-include("HW11-cache")
-include("HW11-cache:homework")
-findProject(":HW11-cache:homework")?.name = "homework"
+
