@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Клиенты</title>
+</head>
+
+<body>
+
+<h2>Список клиентов</h2>
+
+<a href="/clients/add">Добавить клиента</a>
+
+<table style="width: 900px">
+    <thead>
+        <tr>
+            <th style="width: 50px">Id</th>
+            <th style="width: 250px">Имя</th>
+            <th style="width: 400px">Адрес</th>
+            <th style="width: 200px">Телефоны</th>
+        </tr>
+    </thead>
+    <tbody>
+    <#list clients as client>
+        <tr>
+            <td>${client.id}</td>
+            <td>${client.name}</td>
+            <td>${client.address}</td>
+            <td>${client.phones}</td>
+        </tr>
+    </#list>
+
+    </tbody>
+</table>
+</body>
+</html>
