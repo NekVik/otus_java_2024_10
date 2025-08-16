@@ -1,7 +1,5 @@
 dependencies {
 
-    implementation(project(":HW09-jdbc:homework"))
-
     implementation("ch.qos.logback:logback-classic")
     implementation("org.flywaydb:flyway-core")
     implementation("com.zaxxer:HikariCP")
