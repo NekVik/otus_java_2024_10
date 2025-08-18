@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Добавление клиента</title>
+</head>
+
+<body>
+
+<h2>Добавление клиента</h2>
+
+<form action="/clients/add" method="post">
+
+    <table>
+        <tr>
+            <td>
+                <label for="name">Имя клиента: </label>
+                <input type="text" id="name" name="name" placeholder="Имя" required>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="street">Адрес клиента: </label>
+                <input type="text" id="street" name="street" placeholder="Адрес">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="phones">Телефоны клиента: </label>
+                <input type="text" id="phones" name="phones" placeholder="Телефоны">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" onclick="window.location.href='/clients'">Отмена</button>
+                <button type="submit">Добавить</button>
+            </td>
+        </tr>
+
+
+    </table>
+
+
+</form>
+
+</body>
+</html>
