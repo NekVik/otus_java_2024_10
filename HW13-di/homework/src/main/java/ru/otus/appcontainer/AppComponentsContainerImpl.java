@@ -38,12 +38,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
             .sorted(Comparator.comparingInt(m -> m.getAnnotation(AppComponent.class).order()))
             .toList();
 
-        Object configInstance;
-        try {
-            configInstance = configClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create config instance", e);
-        }
+        Object configInstance = getInstance(configClass);
 
         // Создаем компоненты
         for (Method method : componentMethods) {
@@ -64,6 +59,16 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     }
 
+    private static Object getInstance(Class<?> configClass) {
+
+        try {
+           return configClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create config instance", e);
+        }
+
+    }
+
     private Object createComponent(Object configInstance, Method method) throws Exception {
 
         Parameter[] parameters = method.getParameters();
@@ -72,9 +77,6 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         for (int i = 0; i < parameters.length; i++) {
             Class<?> parameterType = parameters[i].getType();
             Object dependency = getAppComponent(parameterType);
-            if (dependency == null) {
-                throw new RuntimeException("No component found for type: " + parameterType);
-            }
             args[i] = dependency;
         }
 
