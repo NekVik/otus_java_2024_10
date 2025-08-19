@@ -12,6 +12,7 @@ include("HW09-jdbc:homework")
 include("HW10-jpql:homework")
 include("HW11-cache:homework")
 include("HW12-webServer:homework")
+include("HW13-di:homework")
 
 pluginManagement {
     val jgitver: String by settings
@@ -34,4 +35,3 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-
