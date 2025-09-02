@@ -11,6 +11,7 @@ import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.sessionmanager.TransactionManager;
 import ru.otus.crm.model.Client;
 
+@SuppressWarnings(("java:S1604"))
 public class DbServiceClientImpl implements DBServiceClient {
     private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class);
 
@@ -19,8 +20,10 @@ public class DbServiceClientImpl implements DBServiceClient {
 
     private final MyCache<String, Client> cache;
 
-    public DbServiceClientImpl(TransactionManager transactionManager,
-                               DataTemplate<Client> clientDataTemplate, MyCache<String, Client> cache) {
+    public DbServiceClientImpl(
+            TransactionManager transactionManager,
+            DataTemplate<Client> clientDataTemplate,
+            MyCache<String, Client> cache) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
         this.cache = cache;
@@ -31,7 +34,6 @@ public class DbServiceClientImpl implements DBServiceClient {
                 log.info("key:{}, value:{}, action: {}", key, value, action);
             }
         });
-
     }
 
     @Override
@@ -80,9 +82,9 @@ public class DbServiceClientImpl implements DBServiceClient {
         return transactionManager.doInReadOnlyTransaction(session -> {
             var clientList = clientDataTemplate.findAll(session);
             clientList.forEach(client -> {
-                    Hibernate.initialize(client.getPhones());
-                    cache.put(String.valueOf(client.getId()), client);
-                });
+                Hibernate.initialize(client.getPhones());
+                cache.put(String.valueOf(client.getId()), client);
+            });
             log.info("clientList:{}", clientList);
             return clientList;
         });

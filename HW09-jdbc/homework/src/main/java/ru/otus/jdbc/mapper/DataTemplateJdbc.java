@@ -15,15 +15,15 @@ import ru.otus.jdbc.mapper.sql.EntityClassMetaData;
 import ru.otus.jdbc.mapper.sql.EntitySQLMetaData;
 
 /** Сохраняет объект в базу, читает объект из базы */
-@SuppressWarnings("java:S1068")
+@SuppressWarnings({"java:S1068", "java:S112", "java:S3011"})
 public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     private final DbExecutor dbExecutor;
     private final EntitySQLMetaData entitySQLMetaData;
     private final EntityClassMetaData<T> entityClassMetaData;
 
-    public DataTemplateJdbc(DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData,
-                            EntityClassMetaData<T> entityClassMetaData) {
+    public DataTemplateJdbc(
+            DbExecutor dbExecutor, EntitySQLMetaData entitySQLMetaData, EntityClassMetaData<T> entityClassMetaData) {
         this.dbExecutor = dbExecutor;
         this.entitySQLMetaData = entitySQLMetaData;
         this.entityClassMetaData = entityClassMetaData;
@@ -45,29 +45,35 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public List<T> findAll(Connection connection) {
-        return dbExecutor.executeSelect(connection, entitySQLMetaData.getSelectAllSql(), Collections.emptyList(), rs -> {
-            var clientList = new ArrayList<T>();
-            try {
-                while (rs.next()) {
-                    clientList.add(mapToObject(rs));
-                }
-                return clientList;
-            } catch (SQLException e) {
-                throw new DataTemplateException(e);
-            }
-        }).orElseThrow(() -> new RuntimeException("Ошибка при выполнении запроса"));
+        return dbExecutor
+                .executeSelect(connection, entitySQLMetaData.getSelectAllSql(), Collections.emptyList(), rs -> {
+                    var clientList = new ArrayList<T>();
+                    try {
+                        while (rs.next()) {
+                            clientList.add(mapToObject(rs));
+                        }
+                        return clientList;
+                    } catch (SQLException e) {
+                        throw new DataTemplateException(e);
+                    }
+                })
+                .orElseThrow(() -> new RuntimeException("Ошибка при выполнении запроса"));
     }
 
     @Override
     public long insert(Connection connection, T client) {
-       return dbExecutor.executeStatement(connection, entitySQLMetaData.getInsertSql(),
-         getFieldValues(client, entityClassMetaData.getFieldsWithoutId()));
+        return dbExecutor.executeStatement(
+                connection,
+                entitySQLMetaData.getInsertSql(),
+                getFieldValues(client, entityClassMetaData.getFieldsWithoutId()));
     }
 
     @Override
     public void update(Connection connection, T object) {
-        dbExecutor.executeStatement(connection, entitySQLMetaData.getUpdateSql(),
-            getFieldValues(object, entityClassMetaData.getFieldsWithoutId(), entityClassMetaData.getIdField()));
+        dbExecutor.executeStatement(
+                connection,
+                entitySQLMetaData.getUpdateSql(),
+                getFieldValues(object, entityClassMetaData.getFieldsWithoutId(), entityClassMetaData.getIdField()));
     }
 
     private T mapToObject(ResultSet rs) {
@@ -91,7 +97,6 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-
     }
 
     private List<Object> getFieldValues(T object, List<Field> fields) {
@@ -107,7 +112,6 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
         });
 
         return fieldValues;
-
     }
 
     private List<Object> getFieldValues(T object, List<Field> fields, Field idField) {
@@ -130,6 +134,5 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
         }
 
         return fieldValues;
-
     }
 }

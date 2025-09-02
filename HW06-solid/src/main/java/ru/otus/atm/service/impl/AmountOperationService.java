@@ -32,5 +32,4 @@ public class AmountOperationService {
     public int getBalance() {
         return amount.getBalance();
     }
-
 }

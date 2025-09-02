@@ -28,7 +28,7 @@ public class BanknoteCell {
         this.count += count;
     }
 
-    public int getCountInSum (int sum) {
+    public int getCountInSum(int sum) {
         return IntStream.range(1, count + 1)
                 .filter(i -> i * nominal.getMultiplier() <= sum)
                 .max()

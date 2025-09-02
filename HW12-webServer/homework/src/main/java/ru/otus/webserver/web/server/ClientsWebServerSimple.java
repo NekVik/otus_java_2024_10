@@ -22,7 +22,8 @@ public class ClientsWebServerSimple implements ClientsWebServer {
     protected final TemplateProcessor templateProcessor;
     private final Server server;
 
-    public ClientsWebServerSimple(int port, DBServiceClient dbServiceClient, Gson gson, TemplateProcessor templateProcessor) {
+    public ClientsWebServerSimple(
+            int port, DBServiceClient dbServiceClient, Gson gson, TemplateProcessor templateProcessor) {
         this.dbServiceClient = dbServiceClient;
         this.gson = gson;
         this.templateProcessor = templateProcessor;
@@ -75,10 +76,13 @@ public class ClientsWebServerSimple implements ClientsWebServer {
 
     private ServletContextHandler createServletContextHandler() {
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.addServlet(new ServletHolder(new ClientsServlet(templateProcessor, dbServiceClient)), "/clients");
-        servletContextHandler.addServlet(new ServletHolder(new ClientsAddServlet(templateProcessor, dbServiceClient)), "/clients/add");
+        servletContextHandler.addServlet(
+                new ServletHolder(new ClientsServlet(templateProcessor, dbServiceClient)), "/clients");
+        servletContextHandler.addServlet(
+                new ServletHolder(new ClientsAddServlet(templateProcessor, dbServiceClient)), "/clients/add");
 
-        servletContextHandler.addServlet(new ServletHolder(new ClientsApiServlet(dbServiceClient, gson)), "/api/client/*");
+        servletContextHandler.addServlet(
+                new ServletHolder(new ClientsApiServlet(dbServiceClient, gson)), "/api/client/*");
         return servletContextHandler;
     }
 }

@@ -10,7 +10,8 @@ public class OperationServiceImpl implements OperationService {
     private final AmountOperationService amountOperationService;
     private final ATMOperationService atmOperationService;
 
-    public OperationServiceImpl(AmountOperationService amountOperationService,ATMOperationService atmOperationService) {
+    public OperationServiceImpl(
+            AmountOperationService amountOperationService, ATMOperationService atmOperationService) {
         this.amountOperationService = amountOperationService;
         this.atmOperationService = atmOperationService;
     }
@@ -31,5 +32,4 @@ public class OperationServiceImpl implements OperationService {
         amountOperationService.withDraw(sum);
         return atmOperationService.getBanknotes(sum);
     }
-
 }

@@ -50,16 +50,17 @@ public class ClientsServlet extends HttpServlet {
     private static ClientDto getClientDto(Client client) {
         if (client != null) {
 
-            var address = Optional.ofNullable(client.getAddress()).map(Address::getStreet).orElse("");
+            var address = Optional.ofNullable(client.getAddress())
+                    .map(Address::getStreet)
+                    .orElse("");
 
-            var phones = Optional.ofNullable(client.getPhones()).map(
-                ph -> ph.stream().map(Phone::getPhone).collect(Collectors.joining(", "))
-            ).orElse("");
+            var phones = Optional.ofNullable(client.getPhones())
+                    .map(ph -> ph.stream().map(Phone::getPhone).collect(Collectors.joining(", ")))
+                    .orElse("");
 
             return new ClientDto(client.getId(), client.getName(), address, phones);
         } else {
             return null;
         }
     }
-
 }

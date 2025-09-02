@@ -12,7 +12,6 @@ import ru.otus.services.PlayerServiceImpl;
 @AppComponentsContainerConfig(order = 2)
 public class AppConfig2 {
 
-
     @AppComponent(order = 1, name = "playerService")
     public PlayerService playerService(IOService ioService) {
         return new PlayerServiceImpl(ioService);
@@ -23,5 +22,4 @@ public class AppConfig2 {
             IOService ioService, PlayerService playerService, EquationPreparer equationPreparer) {
         return new GameProcessorImpl(ioService, equationPreparer, playerService);
     }
-
 }

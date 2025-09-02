@@ -16,9 +16,11 @@ public class ClientsWebServerWithFilterBasedSecurity extends ClientsWebServerSim
     private final UserAuthService authService;
 
     public ClientsWebServerWithFilterBasedSecurity(
-        int port, UserAuthService authService,
-        DBServiceClient dbServiceClient,
-        Gson gson, TemplateProcessor templateProcessor) {
+            int port,
+            UserAuthService authService,
+            DBServiceClient dbServiceClient,
+            Gson gson,
+            TemplateProcessor templateProcessor) {
         super(port, dbServiceClient, gson, templateProcessor);
         this.authService = authService;
     }

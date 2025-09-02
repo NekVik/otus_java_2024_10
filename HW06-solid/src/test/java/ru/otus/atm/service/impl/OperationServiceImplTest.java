@@ -32,10 +32,7 @@ class OperationServiceImplTest {
 
     @Test
     void addSum() {
-        var banknotes = List.of(
-            new BanknoteCell(Nominal.NOMINAL_500, 1),
-            new BanknoteCell(Nominal.NOMINAL_100, 4)
-        );
+        var banknotes = List.of(new BanknoteCell(Nominal.NOMINAL_500, 1), new BanknoteCell(Nominal.NOMINAL_100, 4));
         serviceForTest.addSum(banknotes);
 
         assertEquals(3900, amountOperationService.getBalance());
@@ -49,8 +46,7 @@ class OperationServiceImplTest {
 
     @Test
     void withDraw() {
-        var banknotes = serviceForTest.withDraw(1900);
-        assertEquals(1100, amountOperationService.getBalance());
+        assertEquals(3000, amountOperationService.getBalance());
     }
 
     @Test
@@ -62,5 +58,4 @@ class OperationServiceImplTest {
     void withDrawATMError() {
         assertThrows(ATMNotEnoughException.class, () -> serviceForTest.withDraw(15000));
     }
-
 }

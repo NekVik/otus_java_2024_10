@@ -51,13 +51,12 @@ public class Client implements Cloneable {
     }
 
     public Client(Long id, String name, Address address, List<Phone> phones) {
-       this.id = id;
-       this.name = name;
+        this.id = id;
+        this.name = name;
 
-       this.address = getAddressCopy(address);
-       this.phones = getPhonesCopy(phones);
-       setClientForPhones();
-
+        this.address = getAddressCopy(address);
+        this.phones = getPhonesCopy(phones);
+        setClientForPhones();
     }
 
     private void setClientForPhones() {
@@ -87,5 +86,4 @@ public class Client implements Cloneable {
     private Address getAddressCopy(Address address) {
         return address != null ? address.clone() : null;
     }
-
 }

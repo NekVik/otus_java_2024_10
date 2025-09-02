@@ -30,7 +30,6 @@ class AmountOperationServiceTest {
         var banknotes2 = List.of(new BanknoteCell(Nominal.NOMINAL_2000, 1));
         service.addSum(banknotes2);
         Assertions.assertEquals(5200, service.getBalance());
-
     }
 
     @Test

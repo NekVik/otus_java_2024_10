@@ -11,17 +11,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.outs.aop.annotation.Log;
 
+@SuppressWarnings("java:S2629")
 public class Ioc {
 
     private static final Logger logger = LoggerFactory.getLogger(Ioc.class);
 
-    private Ioc() {
-    }
+    private Ioc() {}
 
     public static TestLoggingInterface getInstance() {
         InvocationHandler handler = new IocHandler(new TestLogging());
-        return (TestLoggingInterface) Proxy.newProxyInstance(Ioc.class.getClassLoader(),
-                                                             new Class[] {TestLoggingInterface.class}, handler);
+        return (TestLoggingInterface)
+                Proxy.newProxyInstance(Ioc.class.getClassLoader(), new Class[] {TestLoggingInterface.class}, handler);
     }
 
     private static class IocHandler implements InvocationHandler {
@@ -48,9 +48,9 @@ public class Ioc {
         private Set<MethodSignature> getAnnotatedMethodSignatures(TestLoggingInterface myClass) {
 
             return Arrays.stream(myClass.getClass().getDeclaredMethods())
-                .filter(method -> method.isAnnotationPresent(Log.class))
-                .map(MethodSignature::new)
-                .collect(Collectors.toSet());
+                    .filter(method -> method.isAnnotationPresent(Log.class))
+                    .map(MethodSignature::new)
+                    .collect(Collectors.toSet());
         }
     }
 
@@ -61,7 +61,9 @@ public class Ioc {
 
         public MethodSignature(Method method) {
             this.name = method.getName();
-            this.params = Arrays.stream(method.getParameterTypes()).map(Class::getName).toArray(String[]::new);
+            this.params = Arrays.stream(method.getParameterTypes())
+                    .map(Class::getName)
+                    .toArray(String[]::new);
         }
 
         @Override
@@ -85,10 +87,7 @@ public class Ioc {
 
         @Override
         public String toString() {
-            return "MethodSignature{" +
-                "name='" + name + '\'' +
-                ", params=" + Arrays.toString(params) +
-                '}';
+            return "MethodSignature{" + "name='" + name + '\'' + ", params=" + Arrays.toString(params) + '}';
         }
     }
 }

@@ -75,7 +75,6 @@ class AppTest {
         }
     }
 
-
     @DisplayName("В контексте не должно быть компонентов с одинаковым именем")
     @Test
     void shouldNotAllowTwoComponentsWithSameName() {

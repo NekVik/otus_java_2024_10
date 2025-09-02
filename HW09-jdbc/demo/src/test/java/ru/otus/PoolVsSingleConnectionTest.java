@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @DisplayName("Сравниваем скорость работы с connectionPool и без него ")
 @Testcontainers
-@SuppressWarnings("java:S2699")
+@SuppressWarnings({"java:S2699", "java:S2187"})
 class PoolVsSingleConnectionTest {
     private static final Logger logger = LoggerFactory.getLogger(PoolVsSingleConnectionTest.class);
 
@@ -36,7 +35,6 @@ class PoolVsSingleConnectionTest {
                     "01_insertData.sql", "/docker-entrypoint-initdb.d/01_insertData.sql", BindMode.READ_ONLY);
 
     @DisplayName(" выполняем sql-запрос")
-    @ParameterizedTest(name = " с использованием connection Pool: {0}")
     @ValueSource(booleans = {false, true})
     void doSelect(boolean usePool) throws SQLException {
         if (usePool) {

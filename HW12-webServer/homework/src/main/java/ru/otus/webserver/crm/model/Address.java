@@ -1,6 +1,5 @@
 package ru.otus.webserver.crm.model;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "address")
+@SuppressWarnings("java:S2975")
 public class Address implements Cloneable {
 
     @Id
@@ -42,5 +42,4 @@ public class Address implements Cloneable {
     public String toString() {
         return "Address{" + "id=" + id + ", street='" + street + '\'' + '}';
     }
-
 }

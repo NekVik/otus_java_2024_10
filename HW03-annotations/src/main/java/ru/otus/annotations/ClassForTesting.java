@@ -5,18 +5,17 @@ import ru.otus.annotations.framework.annotations.After;
 import ru.otus.annotations.framework.annotations.Before;
 import ru.otus.annotations.framework.annotations.Test;
 
+@SuppressWarnings({"java:S1186", "java:S125", "java:S5960"})
 public class ClassForTesting {
 
-    public ClassForTesting() {
-    }
+    public ClassForTesting() {}
 
     @Before
-    public void beforeTest() {
-    }
+    public void beforeTest() {}
 
     @Before
     public void beforeTest2() {
-        //throw new RuntimeException();
+        // throw new RuntimeException();
     }
 
     @Test
@@ -25,7 +24,7 @@ public class ClassForTesting {
         Assertions.assertThat(1).isEqualTo(expected);
     }
 
-   @Test
+    @Test
     public void test2() {
         var expected = 10;
         Assertions.assertThat(10).isEqualTo(expected);
@@ -50,11 +49,10 @@ public class ClassForTesting {
     }
 
     @After
-    public void afterTest() {
-    }
+    public void afterTest() {}
 
     @After
     public void afterTest2() {
-        //throw new RuntimeException();
+        // throw new RuntimeException();
     }
 }

@@ -105,7 +105,7 @@ class ComplexProcessorTest {
             @Override
             public LocalDateTime now() {
                 var now = LocalDateTime.now();
-                return now.getSecond() % 2 == 0 ? now: now.plusSeconds(1);
+                return now.getSecond() % 2 == 0 ? now : now.plusSeconds(1);
             }
         });
 
@@ -113,7 +113,7 @@ class ComplexProcessorTest {
             @Override
             public LocalDateTime now() {
                 var now = LocalDateTime.now();
-                return now.getSecond() % 2 != 0 ? now: now.plusSeconds(1);
+                return now.getSecond() % 2 != 0 ? now : now.plusSeconds(1);
             }
         });
         assertThrows(EvenSecondException.class, () -> processorTrue.process(message));

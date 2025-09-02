@@ -50,21 +50,21 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     private void findEntityConstructor(Class<T> entityClass) {
         Constructor<T>[] constructors = (Constructor<T>[]) entityClass.getDeclaredConstructors();
-        this.constructor = Arrays.stream(constructors).filter(c -> c.getParameterCount() == nonIdFields.size() + 1)
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Entity constructor not found"));
+        this.constructor = Arrays.stream(constructors)
+                .filter(c -> c.getParameterCount() == nonIdFields.size() + 1)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Entity constructor not found"));
     }
 
     private void findEntityFields(Class<T> entityClass) {
 
         this.nonIdFields = Stream.of(entityClass.getDeclaredFields())
-            .filter(field -> !field.isAnnotationPresent(Id.class))
-            .toList();
+                .filter(field -> !field.isAnnotationPresent(Id.class))
+                .toList();
 
         this.idAnnotatedField = Stream.of(entityClass.getDeclaredFields())
-            .filter(field -> field.isAnnotationPresent(Id.class))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Id field not found"));
+                .filter(field -> field.isAnnotationPresent(Id.class))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Id field not found"));
     }
-
 }

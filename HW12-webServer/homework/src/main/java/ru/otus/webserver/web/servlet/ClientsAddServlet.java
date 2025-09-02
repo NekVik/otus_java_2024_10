@@ -18,7 +18,7 @@ import ru.otus.webserver.crm.service.DBServiceClient;
 import ru.otus.webserver.web.model.ClientDto;
 import ru.otus.webserver.web.services.TemplateProcessor;
 
-@SuppressWarnings({"java:S1989"})
+@SuppressWarnings({"java:S1989", "java:S1068", "java:S1144"})
 public class ClientsAddServlet extends HttpServlet {
 
     private static final String ADD_CLIENT_HTML = "add_client.html";
@@ -53,11 +53,13 @@ public class ClientsAddServlet extends HttpServlet {
         client.setAddress(address);
 
         var phones = params.get("phones")[0].split(",");
-        var phoneList = Arrays.stream(phones).map(s -> {
-           var phone = new Phone();
-           phone.setPhone(s);
-           return phone;
-        }).toList();
+        var phoneList = Arrays.stream(phones)
+                .map(s -> {
+                    var phone = new Phone();
+                    phone.setPhone(s);
+                    return phone;
+                })
+                .toList();
         client.setPhones(phoneList);
 
         dbServiceClient.saveClient(client);
@@ -72,16 +74,17 @@ public class ClientsAddServlet extends HttpServlet {
     private static ClientDto getClientDto(Client client) {
         if (client != null) {
 
-            var address = Optional.ofNullable(client.getAddress()).map(Address::getStreet).orElse("");
+            var address = Optional.ofNullable(client.getAddress())
+                    .map(Address::getStreet)
+                    .orElse("");
 
-            var phones = Optional.ofNullable(client.getPhones()).map(
-                ph -> ph.stream().map(Phone::getPhone).collect(Collectors.joining(", "))
-            ).orElse("");
+            var phones = Optional.ofNullable(client.getPhones())
+                    .map(ph -> ph.stream().map(Phone::getPhone).collect(Collectors.joining(", ")))
+                    .orElse("");
 
             return new ClientDto(client.getId(), client.getName(), address, phones);
         } else {
             return null;
         }
     }
-
 }

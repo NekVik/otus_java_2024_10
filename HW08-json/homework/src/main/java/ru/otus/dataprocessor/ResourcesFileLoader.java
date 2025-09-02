@@ -9,7 +9,6 @@ public class ResourcesFileLoader implements Loader {
     private final String fileName;
     private final ObjectMapper mapper;
 
-
     public ResourcesFileLoader(String fileName) {
         this.fileName = fileName;
         this.mapper = new ObjectMapper();

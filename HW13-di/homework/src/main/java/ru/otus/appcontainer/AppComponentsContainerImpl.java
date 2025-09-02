@@ -12,7 +12,7 @@ import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
 
-@SuppressWarnings("squid:S1068")
+@SuppressWarnings({"squid:S1068", "java:S112"})
 public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     private final List<Object> appComponents = new ArrayList<>();
@@ -24,9 +24,10 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     public AppComponentsContainerImpl(Class<?>... initialConfigClass) {
         Arrays.stream(initialConfigClass)
-            .filter(c -> c.isAnnotationPresent(AppComponentsContainerConfig.class))
-            .sorted(Comparator.comparingInt(c -> c.getAnnotation(AppComponentsContainerConfig.class).order()))
-            .forEachOrdered(this::processConfig);
+                .filter(c -> c.isAnnotationPresent(AppComponentsContainerConfig.class))
+                .sorted(Comparator.comparingInt(
+                        c -> c.getAnnotation(AppComponentsContainerConfig.class).order()))
+                .forEachOrdered(this::processConfig);
     }
 
     private void processConfig(Class<?> configClass) {
@@ -34,9 +35,10 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         // You code here...
 
         List<Method> componentMethods = Arrays.stream(configClass.getDeclaredMethods())
-            .filter(method -> method.isAnnotationPresent(AppComponent.class))
-            .sorted(Comparator.comparingInt(m -> m.getAnnotation(AppComponent.class).order()))
-            .toList();
+                .filter(method -> method.isAnnotationPresent(AppComponent.class))
+                .sorted(Comparator.comparingInt(
+                        m -> m.getAnnotation(AppComponent.class).order()))
+                .toList();
 
         Object configInstance = getInstance(configClass);
 
@@ -56,17 +58,15 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
                 throw new RuntimeException("Failed to create component: " + method.getName(), e);
             }
         }
-
     }
 
     private static Object getInstance(Class<?> configClass) {
 
         try {
-           return configClass.getDeclaredConstructor().newInstance();
+            return configClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Failed to create config instance", e);
         }
-
     }
 
     private Object createComponent(Object configInstance, Method method) throws Exception {
@@ -120,5 +120,4 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
         return (C) appComponentsByName.get(componentName);
     }
-
 }

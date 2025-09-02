@@ -56,5 +56,4 @@ public class Customer {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }

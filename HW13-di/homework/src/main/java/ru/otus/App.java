@@ -31,7 +31,7 @@ public class App {
         // AppComponentsContainer container = new AppComponentsContainerImpl("ru.otus.config");
 
         // Обязательный вариант
-        //AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig.class);
+        // AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig.class);
         AppComponentsContainer container = new AppComponentsContainerImpl(AppConfig2.class, AppConfig3.class);
 
         // Приложение должно работать в каждом из указанных ниже вариантов

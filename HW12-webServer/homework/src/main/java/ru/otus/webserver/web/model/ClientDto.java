@@ -29,5 +29,4 @@ public class ClientDto {
     public String getPhones() {
         return phones;
     }
-
 }

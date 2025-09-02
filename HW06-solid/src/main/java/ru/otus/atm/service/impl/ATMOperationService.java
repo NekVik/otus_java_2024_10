@@ -13,7 +13,7 @@ public class ATMOperationService {
         this.atm = atm;
     }
 
-    public void addBanknotes (List<BanknoteCell> banknoteCells){
+    public void addBanknotes(List<BanknoteCell> banknoteCells) {
         banknoteCells.forEach(banknote -> atm.addBanknote(banknote.getNominal(), banknote.getCount()));
     }
 
@@ -28,5 +28,4 @@ public class ATMOperationService {
     public int getCountByNominal(Nominal nominal) {
         return atm.getCountByNominal(nominal);
     }
-
 }

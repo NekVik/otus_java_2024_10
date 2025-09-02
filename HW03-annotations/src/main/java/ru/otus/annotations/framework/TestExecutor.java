@@ -16,13 +16,12 @@ public class TestExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(TestExecutor.class);
 
-    private TestExecutor() {
-    }
+    private TestExecutor() {}
 
     public static TestResult runTests(Class<?> clazz) {
 
         var testMethods = getAnnotationPresentMethods(clazz, Test.class);
-        var beforeMethods = getAnnotationPresentMethods(clazz,Before.class);
+        var beforeMethods = getAnnotationPresentMethods(clazz, Before.class);
         var afterMethods = getAnnotationPresentMethods(clazz, After.class);
 
         logger.info("-------------------------------------------------------");
@@ -43,20 +42,23 @@ public class TestExecutor {
                 ReflectionHelper.callMethod(instance, method.getName());
                 logger.info("Тест - {}. Успешно.", method.getName());
             } catch (Exception e) {
-                logger.error("Тест - {}. Ошибка.", method.getName(), e.getCause().getCause());
+                logger.error(
+                        "Тест - {}. Ошибка.", method.getName(), e.getCause().getCause());
                 errors++;
             } finally {
                 // выполняем методы After
                 try {
                     runMethods(instance, afterMethods);
                 } catch (Exception e) {
-                    logger.error("Тест - {}. Ошибка в методе After", method.getName(), e.getCause().getCause());
+                    logger.error(
+                            "Тест - {}. Ошибка в методе After",
+                            method.getName(),
+                            e.getCause().getCause());
                 }
             }
         }
 
         return new TestResult(allTests, errors);
-
     }
 
     private static void runMethods(Object instance, List<Method> methods) {

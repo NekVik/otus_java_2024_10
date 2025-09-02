@@ -15,8 +15,7 @@ public class DbServiceClientImpl implements DBServiceClient {
     private final DataTemplate<Client> clientDataTemplate;
     private final TransactionManager transactionManager;
 
-    public DbServiceClientImpl(TransactionManager transactionManager,
-                               DataTemplate<Client> clientDataTemplate) {
+    public DbServiceClientImpl(TransactionManager transactionManager, DataTemplate<Client> clientDataTemplate) {
         this.transactionManager = transactionManager;
         this.clientDataTemplate = clientDataTemplate;
     }
@@ -54,8 +53,8 @@ public class DbServiceClientImpl implements DBServiceClient {
         return transactionManager.doInReadOnlyTransaction(session -> {
             var clientList = clientDataTemplate.findAll(session);
             clientList.forEach(client -> {
-                    Hibernate.initialize(client.getPhones());
-                });
+                Hibernate.initialize(client.getPhones());
+            });
             log.info("clientList:{}", clientList);
             return clientList;
         });

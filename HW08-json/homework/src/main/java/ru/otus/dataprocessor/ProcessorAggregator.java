@@ -11,11 +11,6 @@ public class ProcessorAggregator implements Processor {
     @Override
     public Map<String, Double> process(List<Measurement> data) {
         return new TreeMap<>(data.stream()
-            .collect(
-                Collectors.groupingBy(
-                    Measurement::name, Collectors.summingDouble(Measurement::value)
-                )
-            )
-        );
+                .collect(Collectors.groupingBy(Measurement::name, Collectors.summingDouble(Measurement::value))));
     }
 }

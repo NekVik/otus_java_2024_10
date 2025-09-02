@@ -18,7 +18,8 @@ public class ATM {
 
         this.balance = BanknoteUtils.getBanknoteSum(slots);
 
-        this.slots = new TreeMap<>(Comparator.comparingInt(Nominal::getMultiplier).reversed());
+        this.slots =
+                new TreeMap<>(Comparator.comparingInt(Nominal::getMultiplier).reversed());
 
         slots.forEach(banknote -> this.slots.put(banknote.getNominal(), banknote));
     }
@@ -66,7 +67,6 @@ public class ATM {
             if (resultSum == 0) {
                 break;
             }
-
         }
         balance -= sum;
 

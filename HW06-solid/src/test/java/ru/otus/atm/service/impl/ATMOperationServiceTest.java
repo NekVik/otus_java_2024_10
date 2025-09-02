@@ -25,10 +25,8 @@ class ATMOperationServiceTest {
 
     @Test
     void addBanknotes() {
-        service.addBanknotes(List.of(
-            new BanknoteCell(Nominal.NOMINAL_5000, 1),
-            new BanknoteCell(Nominal.NOMINAL_100, 2)
-        ));
+        service.addBanknotes(
+                List.of(new BanknoteCell(Nominal.NOMINAL_5000, 1), new BanknoteCell(Nominal.NOMINAL_100, 2)));
         var countBy5000 = service.getCountByNominal(Nominal.NOMINAL_5000);
         assertEquals(1, countBy5000);
         var countBy100 = service.getCountByNominal(Nominal.NOMINAL_100);
@@ -57,5 +55,4 @@ class ATMOperationServiceTest {
     void canWithDrawError() {
         assertThrows(ATMNotEnoughException.class, () -> service.canWithDraw(15000));
     }
-
 }

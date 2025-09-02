@@ -52,8 +52,8 @@ public class DbServiceClientImpl implements DBServiceClient {
         return transactionManager.doInReadOnlyTransaction(session -> {
             var clientList = clientDataTemplate.findAll(session);
             clientList.forEach(client -> {
-                    Hibernate.initialize(client.getPhones());
-                });
+                Hibernate.initialize(client.getPhones());
+            });
             log.info("clientList:{}", clientList);
             return clientList;
         });

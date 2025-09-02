@@ -8,5 +8,4 @@ public interface OperationService {
     void addSum(List<BanknoteCell> banknoteCells);
 
     List<BanknoteCell> withDraw(int sum);
-
 }

@@ -1,7 +1,6 @@
 package ru.otus.atm.data;
 
 public enum Nominal {
-
     NOMINAL_100(100),
     NOMINAL_200(200),
     NOMINAL_500(500),
@@ -18,5 +17,4 @@ public enum Nominal {
     public int getMultiplier() {
         return multiplier;
     }
-
 }

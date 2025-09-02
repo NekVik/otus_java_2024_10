@@ -40,12 +40,12 @@ public class HomeWork {
         complexProcessor.addListener(listenerPrinter);
 
         var message = new Message.Builder(1L)
-            .field1("field1")
-            .field2("field2")
-            .field3("field3")
-            .field6("field6")
-            .field10("field10")
-            .build();
+                .field1("field1")
+                .field2("field2")
+                .field3("field3")
+                .field6("field6")
+                .field10("field10")
+                .build();
 
         var result = complexProcessor.handle(message);
         logger.info("result:{}", result);

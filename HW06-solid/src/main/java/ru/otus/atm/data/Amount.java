@@ -28,5 +28,4 @@ public class Amount {
     public UUID getId() {
         return id;
     }
-
 }

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import ru.otus.webserver.crm.service.DBServiceClient;
 
-@SuppressWarnings({"java:S1989"})
+@SuppressWarnings({"java:S1989", "java:S1144"})
 public class ClientsApiServlet extends HttpServlet {
 
     private static final int ID_PATH_PARAM_POSITION = 1;
@@ -23,7 +23,6 @@ public class ClientsApiServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       // User user = userDao.findById(extractIdFromRequest(request)).orElse(null);
 
         var client = dbServiceClient.getClient(1L);
 
