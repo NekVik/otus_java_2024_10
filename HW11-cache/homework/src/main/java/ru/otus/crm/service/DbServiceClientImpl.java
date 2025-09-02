@@ -11,7 +11,7 @@ import ru.otus.core.repository.DataTemplate;
 import ru.otus.core.sessionmanager.TransactionManager;
 import ru.otus.crm.model.Client;
 
-@SuppressWarnings(("java:S1604"))
+@SuppressWarnings({"java:S1604", "java:S1602"})
 public class DbServiceClientImpl implements DBServiceClient {
     private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class);
 

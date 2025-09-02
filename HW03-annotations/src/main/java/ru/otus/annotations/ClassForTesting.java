@@ -31,7 +31,7 @@ public class ClassForTesting {
     }
 
     @Test
-    public void test3_error() {
+    public void test3Error() {
         var expected = 1;
         Assertions.assertThat(3).isEqualTo(expected);
     }
@@ -43,7 +43,7 @@ public class ClassForTesting {
     }
 
     @Test
-    public void test5_error() {
+    public void test5Error() {
         int i = 1 / 0;
         Assertions.assertThat(i).isEqualTo(0);
     }

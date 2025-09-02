@@ -18,7 +18,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "phone")
-@SuppressWarnings({"java:S2975", "java:S1700"})
+@SuppressWarnings({"java:S2975", "java:S1700", "java:S1182"})
 public class Phone implements Cloneable {
 
     @Id

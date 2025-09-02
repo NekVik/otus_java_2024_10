@@ -9,6 +9,7 @@ import ru.otus.webserver.core.repository.DataTemplate;
 import ru.otus.webserver.core.sessionmanager.TransactionManager;
 import ru.otus.webserver.crm.model.Client;
 
+@SuppressWarnings("java:S1602")
 public class DbServiceClientImpl implements DBServiceClient {
     private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class);
 
