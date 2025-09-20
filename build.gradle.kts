@@ -1,5 +1,4 @@
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
-import name.remal.gradle_plugins.sonarlint.SonarLintExtension
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 
@@ -36,9 +35,10 @@ allprojects {
     val guava: String by project
     val jmh: String by project
     val asm: String by project
-    val jsr305: String by project
-    val redisson: String by project
     val glassfishJson: String by project
+    val errorProneAnnotations: String by project
+    val j2objcAnnotations: String by project
+    val redisson: String by project
 
     val jetty: String by project
     val freemarker: String by project
@@ -49,6 +49,9 @@ allprojects {
     val stomp: String by project
     val bootstrap: String by project
     val springDocOpenapiUi: String by project
+    val jsr305: String by project
+
+    val grpc: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -61,10 +64,10 @@ allprojects {
             dependency("com.google.guava:guava:$guava")
             dependency("org.openjdk.jmh:jmh-core:$jmh")
             dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
-            dependency("org.glassfish:jakarta.json:$glassfishJson")
             dependency("org.ow2.asm:asm-commons:$asm")
-
-            dependency("com.google.code.findbugs:jsr305:$jsr305")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
+            dependency("com.google.errorprone:error_prone_annotations:$errorProneAnnotations")
+            dependency("com.google.j2objc:j2objc-annotations:$j2objcAnnotations")
             dependency("org.redisson:redisson:$redisson")
 
             dependency("org.eclipse.jetty.ee10:jetty-ee10-servlet:$jetty")
@@ -83,6 +86,11 @@ allprojects {
             dependency("org.webjars:bootstrap:$bootstrap")
             dependency("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springDocOpenapiUi")
 
+            dependency("com.google.code.findbugs:jsr305:$jsr305")
+
+            dependency("io.grpc:grpc-netty:$grpc")
+            dependency("io.grpc:grpc-protobuf:$grpc")
+            dependency("io.grpc:grpc-stub:$grpc")
         }
     }
 
@@ -95,12 +103,7 @@ allprojects {
             force("commons-lang:commons-lang:2.5")
             force("org.codehaus.jackson:jackson-core-asl:1.8.8")
             force("org.codehaus.jackson:jackson-mapper-asl:1.8.8")
-            force("org.sonarsource.analyzer-commons:sonar-analyzer-commons:2.8.0.2699")
-            force("org.sonarsource.analyzer-commons:sonar-xml-parsing:2.8.0.2699")
-            force("org.sonarsource.sslr:sslr-core:1.24.0.633")
-            force("org.sonarsource.analyzer-commons:sonar-analyzer-recognizers:2.8.0.2699")
-            force("com.google.code.findbugs:jsr305:3.0.2")
-            force("commons-io:commons-io:2.15.1")
+            force("commons-io:commons-io:2.18.0")
             force("com.google.errorprone:error_prone_annotations:2.26.1")
             force("com.google.j2objc:j2objc-annotations:3.0.0")
         }
@@ -121,16 +124,11 @@ subprojects {
     }
 
     apply<name.remal.gradle_plugins.sonarlint.SonarLintPlugin>()
-    configure<SonarLintExtension> {
-        nodeJs {
-            detectNodeJs = false
-            logNodeJsNotFound = false
-        }
-    }
+
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
     configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         java {
-            palantirJavaFormat("2.39.0")
+            palantirJavaFormat("2.63.0")
         }
     }
 
@@ -140,8 +138,8 @@ subprojects {
         nonQualifierBranches("main,master")
         tagVersionPattern("\${v}\${<meta.DIRTY_TEXT}")
         versionPattern(
-                "\${v}\${<meta.COMMIT_DISTANCE}\${<meta.GIT_SHA1_8}" +
-                        "\${<meta.QUALIFIED_BRANCH_NAME}\${<meta.DIRTY_TEXT}-SNAPSHOT"
+            "\${v}\${<meta.COMMIT_DISTANCE}\${<meta.GIT_SHA1_8}" +
+                    "\${<meta.QUALIFIED_BRANCH_NAME}\${<meta.DIRTY_TEXT}-SNAPSHOT"
         )
     }
 
@@ -159,10 +157,10 @@ tasks {
     val managedVersions by registering {
         doLast {
             project.extensions.getByType<DependencyManagementExtension>()
-                    .managedVersions
-                    .toSortedMap()
-                    .map { "${it.key}:${it.value}" }
-                    .forEach(::println)
+                .managedVersions
+                .toSortedMap()
+                .map { "${it.key}:${it.value}" }
+                .forEach(::println)
         }
     }
 }
