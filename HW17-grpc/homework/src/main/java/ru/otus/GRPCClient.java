@@ -1,7 +1,6 @@
 package ru.otus;
 
 import io.grpc.ManagedChannelBuilder;
-import java.util.LinkedList;
 import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
@@ -33,16 +32,16 @@ public class GRPCClient {
                 .build();
 
         int currentValue = 0;
-        var queue = new LinkedList<Integer>();
 
         var stub = RemoteDBServiceGrpc.newStub(channel);
         var latch = new CountDownLatch(1);
+        var observer = new ClientStreamObserver(latch);
 
-        stub.serverStreamingValue(request, new ClientStreamObserver(queue, latch));
+        stub.serverStreamingValue(request, observer);
 
         for (var i = 0; i < COUNT_ITERATIONS; i++) {
 
-            int lastServerValue = Optional.ofNullable(queue.poll()).orElse(0);
+            int lastServerValue = Optional.ofNullable(observer.getLastValueAndMakeNull()).orElse(0);
             currentValue = currentValue + lastServerValue + 1;
             log.info("currentValue: {}", currentValue);
 

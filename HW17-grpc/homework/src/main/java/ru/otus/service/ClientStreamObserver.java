@@ -1,7 +1,6 @@
 package ru.otus.service;
 
 import io.grpc.stub.StreamObserver;
-import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +10,16 @@ public class ClientStreamObserver implements StreamObserver<ValueResponse> {
 
     private static final Logger log = LoggerFactory.getLogger(ClientStreamObserver.class);
 
-    private final Queue<Integer> queue;
+    private Integer lastValue;
     private final CountDownLatch latch;
 
-    public ClientStreamObserver(Queue<Integer> queue, CountDownLatch latch) {
-        this.queue = queue;
+    public ClientStreamObserver(CountDownLatch latch) {
         this.latch = latch;
     }
 
     @Override
     public void onNext(ValueResponse value) {
-        queue.offer(value.getNewValue());
+        lastValue = value.getNewValue();
         log.info("Received value: {}", value.getNewValue());
     }
 
@@ -34,4 +32,11 @@ public class ClientStreamObserver implements StreamObserver<ValueResponse> {
     public void onCompleted() {
         latch.countDown();
     }
+
+    public Integer getLastValueAndMakeNull() {
+        var result = lastValue;
+        lastValue = null;
+        return result;
+    }
+
 }
