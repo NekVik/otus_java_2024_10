@@ -1,7 +1,6 @@
 package ru.otus;
 
 import io.grpc.ManagedChannelBuilder;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +40,7 @@ public class GRPCClient {
 
         for (var i = 0; i < COUNT_ITERATIONS; i++) {
 
-            int lastServerValue = Optional.ofNullable(observer.getLastValueAndMakeNull()).orElse(0);
+            int lastServerValue = observer.getLastValueAndMakeZero();
             currentValue = currentValue + lastServerValue + 1;
             log.info("currentValue: {}", currentValue);
 
