@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package ru.otus.protobuf;
+
+option java_multiple_files = true;
+
+message ClientRequest {
+    int32 firstValue = 1;
+    int32 lastValue = 2;
+}
+
+message ValueResponse {
+    int32 newValue = 1;
+}
+
+message Empty {}
+
+service RemoteDBService {
+    rpc serverStreamingValue(ClientRequest) returns (stream ValueResponse) {}
+}

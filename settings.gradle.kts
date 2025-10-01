@@ -16,6 +16,7 @@ include("HW13-di:homework")
 include("HW14-springBootMvc:homework")
 include("HW15-executors:homework")
 include("HW16-concurrentCollections:homework")
+include("HW17-grpc:homework")
 
 pluginManagement {
     val jgitver: String by settings
