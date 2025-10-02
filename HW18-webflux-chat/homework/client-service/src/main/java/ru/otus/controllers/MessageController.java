@@ -44,10 +44,11 @@ public class MessageController {
     }
 
     private void convertAndSend(String roomId, Message message) {
+        var msg = new Message(HtmlUtils.htmlEscape(message.messageStr()));
         template.convertAndSend(
-                String.format("%s%s", TOPIC_TEMPLATE, roomId), new Message(HtmlUtils.htmlEscape(message.messageStr())));
+                String.format("%s%s", TOPIC_TEMPLATE, roomId), msg);
         template.convertAndSend(
-            String.format("%s%s", TOPIC_TEMPLATE, SPECIAL_ROOM), new Message(HtmlUtils.htmlEscape(message.messageStr())));
+            String.format("%s%s", TOPIC_TEMPLATE, SPECIAL_ROOM), msg);
     }
 
     @EventListener
