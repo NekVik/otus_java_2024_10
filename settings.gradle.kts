@@ -17,6 +17,8 @@ include("HW14-springBootMvc:homework")
 include("HW15-executors:homework")
 include("HW16-concurrentCollections:homework")
 include("HW17-grpc:homework")
+include ("HW18-webflux-chat:homework:client-service")
+include ("HW18-webflux-chat:homework:datastore-service")
 
 pluginManagement {
     val jgitver: String by settings
